@@ -24,7 +24,7 @@ class Work(object):
         if sess == None:
             sess = requests.Session()
             
-        req = sess.get('https://archiveofourown.org/works/%s' % self.id)
+        req = sess.get('https://archiveofourown.org/works/%s?view_full_work=true' % self.id)
 
         if req.status_code == 404:
             raise WorkNotFound('Unable to find a work with id %r' % self.id)
@@ -284,7 +284,12 @@ class Work(object):
         #
         # TODO: capture text for multi-chapter works
         
-        body_div = self._soup.find('div', attrs={'class': 'userstuff'})
+        body_div = self._soup.findAll('div', attrs={'class': 'userstuff'})
+        text=''
+        for chapter in body_div:
+            chapter_text='\n'.join([str(elem) for elem in chapter.contents])
+            text+=chapter_text
+            text+='\n'
         """bodylist = body_div.contents
         bodyStr = ''
         for elem in bodylist:
@@ -292,7 +297,7 @@ class Work(object):
                 bodyStr+=str(elem)
             except:
                 bodyStr+=elem"""
-        return '\n'.join([str(elem) for elem in body_div.contents])
+        return text
 
 
     def json(self, *args, **kwargs):
