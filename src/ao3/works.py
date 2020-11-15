@@ -29,8 +29,8 @@ class Work(object):
         if req.status_code == 404:
             raise WorkNotFound('Unable to find a work with id %r' % self.id)
         elif req.status_code != 200:
-            raise RuntimeError('Unexpected error from AO3 API: %r (%r)' % (
-                req.text, req.statuscode))
+            raise RuntimeError('Unexpected error from AO3 API: %r' % (
+                req.text))
 
         # For some works, AO3 throws up an interstitial page asking you to
         # confirm that you really want to see the adult works.  Yes, we do.
