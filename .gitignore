@@ -2,8 +2,12 @@
 *.egg-info
 build
 dist
+*.pyc
 
 # Test files
 .cache
 .coverage
 .tox
+
+# Log in info
+cred.py
