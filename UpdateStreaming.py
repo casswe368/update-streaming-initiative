@@ -73,14 +73,16 @@ def getCatalog(api):
 def scanWorks(api,catalog):
     #scan through each work in the catalog for embedded audio that will no longer function
     #create a class instance to store information about each work
-    report = 'ALL CODE TO UPDATE\n\n'
+    #save information to report file
+    f = open('PODFIC CODE TO UPDATE.txt', 'w', encoding='utf-8')
+    
     for work_id in catalog:
         print(work_id)
         work = api.work(id=work_id)
         section=searchText(work)
-        report+=section
+        f.write(section)
     
-    saveReport(report)
+    f.close()
         
 def searchText(work):
     #search through the body of the text for the broken streaming code
@@ -121,15 +123,11 @@ def replaceCode(embed):
         report='BROKEN CODE:\n\n%s\n\nUPDATED CODE:\n\n<audio src="%s" controls="controls" crossorigin="anonymous" preload="metadata"></audio>\n\n' % (embed, link)
     
     except:
-        report='BROKEN CODE:\n\n%s\n\nUPDATED CODE:\n\nCOULD NOT FIND MP3 LINK TO UPDATE CODE' % embed
+        report='BROKEN CODE:\n\n%s\n\nUPDATED CODE:\n\nCOULD NOT FIND MP3 LINK TO UPDATE CODE\n\n' % embed
     
     
     return report
 
-def saveReport(report):
-    f = open('PODFIC CODE TO UPDATE.txt', 'w', encoding='utf-8')
-    f.write(report)
-    f.close()        
 
 def main():
     api = login()
