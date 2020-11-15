@@ -118,7 +118,7 @@ def replaceCode(embed):
                 if url_data.startswith('http'):
                     link=url_data
                 else:
-                    raise Exception('New Code Indentified:',embed)
+                    raise Exception('New Code Identified:',embed)
         
         report='BROKEN CODE:\n\n%s\n\nUPDATED CODE:\n\n<audio src="%s" controls="controls" crossorigin="anonymous" preload="metadata"></audio>\n\n' % (embed, link)
     
