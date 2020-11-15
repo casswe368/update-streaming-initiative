@@ -120,7 +120,7 @@ def replaceCode(embed):
                 else:
                     raise Exception('New Code Identified:',embed)
         
-        report='BROKEN CODE:\n\n%s\n\nUPDATED CODE:\n\n<audio src="%s" controls="controls" crossorigin="anonymous" preload="metadata"></audio>\n\n' % (embed, link)
+        report='BROKEN CODE:\n\n%s\n\nUPDATED CODE:\n\n<audio src="%s" controls="controls" crossorigin="anonymous" preload="metadata">Your browser does not support streaming with the HTML5 audio tag, but you can still <a href="%s">play this podfic</a> in another tab.</audio>\n\n' % (embed, link, link)
     
     except:
         report='BROKEN CODE:\n\n%s\n\nUPDATED CODE:\n\nCOULD NOT FIND MP3 LINK TO UPDATE CODE\n\n' % embed
