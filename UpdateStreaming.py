@@ -95,21 +95,18 @@ def searchText(work):
 
 def startReport(work):
     #for each work identified, begin a report on the broken streaming code that needs to be replaced
-    intro="\n\nPODFIC: %s\nURL: %s\n\n\n" % (work.title,work.url)
+    intro="PODFIC: %s\nURL: %s\n\n\n" % (work.title,work.url)
     return intro
     
 def replaceCode(embed):
     #replace the broken code with the updated code
     #include the streaming link in the updated code
     url_data=embed.get('flashvars')
-    print(url_data)
     if url_data.startswith('audioUrl'):
         link=url_data[9:]
-        print(link)
     else:
         if url_data.startswith('mp3'):
             link=url_data[4:]
-            print(link)
         else:
             raise Exception('New Code Indentified:',embed)
     
@@ -121,7 +118,7 @@ def main():
     api = login()
     #catalog=getCatalog(api)
     #scanWorks(api,catalog)
-    searchText(api.work(id='7215418'))
+    searchText(api.work(id='7791553'))
     return
 
 main()
