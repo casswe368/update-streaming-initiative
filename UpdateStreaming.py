@@ -73,17 +73,21 @@ def getCatalog(api):
 def scanWorks(api,catalog):
     #scan through each work in the catalog for embedded audio that will no longer function
     #create a class instance to store information about each work
+    report = 'ALL CODE TO UPDATE\n\n'
     for work_id in catalog:
+        print(work_id)
         work = api.work(id=work_id)
-        searchText(work)
-    return
+        section=searchText(work)
+        report+=section
+    
+    saveReport(report)
         
 def searchText(work):
     #search through the body of the text for the broken streaming code
     soup=BeautifulSoup(work.body, 'html.parser')
     numBroken=0
+    report=''
     for embed in soup.find_all('embed'):
-        report=''
         numBroken+=1
         
         if numBroken == 1:
@@ -91,34 +95,47 @@ def searchText(work):
             
         report+=replaceCode(embed)
         
-        print(report)
+    return report
 
 def startReport(work):
     #for each work identified, begin a report on the broken streaming code that needs to be replaced
-    intro="PODFIC: %s\nURL: %s\n\n\n" % (work.title,work.url)
+    intro="----------\n\nPODFIC: %s\nURL: %s\n\n\n" % (work.title,work.url)
     return intro
     
 def replaceCode(embed):
     #replace the broken code with the updated code
     #include the streaming link in the updated code
     url_data=embed.get('flashvars')
-    if url_data.startswith('audioUrl'):
-        link=url_data[9:]
-    else:
-        if url_data.startswith('mp3'):
-            link=url_data[4:]
+    try:
+        if url_data.startswith('audioUrl'):
+            link=url_data[9:]
         else:
-            raise Exception('New Code Indentified:',embed)
+            if url_data.startswith('mp3'):
+                link=url_data[4:]
+            else:
+                if url_data.startswith('http'):
+                    link=url_data
+                else:
+                    raise Exception('New Code Indentified:',embed)
+        
+        report='BROKEN CODE:\n\n%s\n\nUPDATED CODE:\n\n<audio src="%s" controls="controls" crossorigin="anonymous" preload="metadata"></audio>\n\n' % (embed, link)
     
-    report='BROKEN CODE:\n\n%s\n\nUPDATED CODE:\n\n<audio src="%s" controls="controls" crossorigin="anonymous" preload="metadata"></audio>\n\n' % (embed, link)
+    except:
+        report='BROKEN CODE:\n\n%s\n\nUPDATED CODE:\n\nCOULD NOT FIND MP3 LINK TO UPDATE CODE' % embed
     
-    return report        
+    
+    return report
+
+def saveReport(report):
+    f = open('PODFIC CODE TO UPDATE.txt', 'w', encoding='utf-8')
+    f.write(report)
+    f.close()        
 
 def main():
     api = login()
-    #catalog=getCatalog(api)
-    #scanWorks(api,catalog)
-    searchText(api.work(id='7791553'))
+    catalog=getCatalog(api)
+    scanWorks(api,catalog)
+    
     return
 
 main()
