@@ -12,6 +12,7 @@ Created on Sat Nov 14 22:01:55 2020
 
 from src.ao3 import AO3
 import cred
+from bs4 import BeautifulSoup, Tag
 
 api = AO3()
 username=cred.username
@@ -24,7 +25,7 @@ print('title')
 print(work.title)
 print('text')
 
-work2 = api.work(id='25717039')
+work2 = api.work(id='15718194')
 print('title')
 #print(work2._html)
 print(work2.title)
@@ -47,4 +48,19 @@ f.write(soup.prettify())
 f.close()
 """
 
-print(work2.body)
+#print(work.body)
+
+text=work.body
+
+soup = BeautifulSoup(text, 'html.parser')
+
+print(soup.embed)
+
+for link in soup.find_all('embed'):
+    print(link.get('flashvars'))
+
+text2=work2.body
+
+soup2 = BeautifulSoup(text2, 'html.parser')
+
+print(soup2.audio)
