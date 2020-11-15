@@ -25,7 +25,7 @@ print('title')
 print(work.title)
 print('text')
 
-work2 = api.work(id='15718194')
+work2 = api.work(id='7215418')
 print('title')
 #print(work2._html)
 print(work2.title)
@@ -49,7 +49,7 @@ f.close()
 """
 #print(work.body)
 
-text=work.body
+text=work2.body
 print(text)
 
 soup = BeautifulSoup(text, 'html.parser')
