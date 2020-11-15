@@ -223,3 +223,92 @@ class User(object):
             except:
                 # In case of absence of "next"
                 break
+
+    def catalog_ids(self):
+        """
+        Returns a list of the ids of the user's catalog of works.
+
+        User must be logged in to see locked works.
+        """
+        api_url = (
+            'https://archiveofourown.org/users/%s/works?page=%%d'
+            % self.username)
+
+        works = []
+
+        num_works = 0
+        for page_no in itertools.count(start=1):
+            #print("Finding page: \t" + str(page_no) + " of works. \t" + str(num_works) + " work ids found.")
+
+            req = self.sess.get(api_url % page_no)
+
+            soup = BeautifulSoup(req.text, features='html.parser')
+
+
+        
+            # The entries are stored in a list of the form:
+            #
+            #     <ol class="work index group">
+            #       <li class="own work blurb group" id="work_27194623" role="article">
+            #         ...
+            #       </li>
+            #       <li class="own work blurb group" id="work_26964688" role="article">
+            #         ...
+            #       </li>
+            #       ...
+            #     </ol>
+
+            ol_tag = soup.find('ol', attrs={'class': 'work'})
+            
+
+            for li_tag in ol_tag.findAll('li', attrs={'class': 'blurb'}):
+                num_works = num_works + 1
+                try:
+                    # <h4 class="heading">
+                    #   <a href="/works/12345678">Work Title</a>
+                    #   by
+                    #
+                    #   <!-- do not cache -->
+                    #   <a rel="author" href="/users/authorname/pseuds/authorpseud">Author Name</a>,<a rel="author" href="/users/authorname/pseuds/authorpseud">Author Name</a> (repeat for each author)
+                    #
+                    #
+                    #   <img alt="(Restricted)" title="Restricted" src="/images/lockblue.png" width="15" height="15"/>
+                    #
+                    # </h4>
+
+                    for h4_tag in li_tag.findAll('h4', attrs={'class': 'heading'}):
+                        for link in h4_tag.findAll('a'):
+                            if ('works' in link.get('href')) and not ('external_works' in link.get('href')):
+                                work_id = link.get('href').replace('/works/', '')
+                                works.append(work_id)
+                
+                #do not need exception, but keeping in case
+                except KeyError:
+                    # A deleted work shows up as
+                    #
+                    #      <li class="deleted reading work blurb group">
+                    #
+                    # There's nothing that we can do about that, so just skip
+                    # over it.
+                    if 'deleted' in li_tag.attrs['class']:
+                        pass
+                    else:
+                        raise
+
+
+            # The pagination button at the end of the page is of the form
+            #
+            #     <li class="next" title="next"> ... </li>
+            #
+            # If there's another page of results, this contains an <a> tag
+            # pointing to the next page.  Otherwise, it contains a <span>
+            # tag with the 'disabled' class.
+            try:
+                next_button = soup.find('li', attrs={'class': 'next'})
+                if next_button.find('span', attrs={'class': 'disabled'}):
+                    break
+            except:
+                # In case of absence of "next"
+                break
+
+        return works
