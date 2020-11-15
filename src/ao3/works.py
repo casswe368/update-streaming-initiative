@@ -272,6 +272,28 @@ class Work(object):
     def hits(self):
         """The number of hits this work has received."""
         return int(self._lookup_stat('hits', 0))
+    
+    @property
+    def body(self):
+        """The text in the body of the work."""
+        # The text is kept in the following format: (for single-chapter works)
+        #
+        #     <div class="userstuff">
+        #         [text_html]
+        #     </div>
+        #
+        # TODO: capture text for multi-chapter works
+        
+        body_div = self._soup.find('div', attrs={'class': 'userstuff'})
+        """bodylist = body_div.contents
+        bodyStr = ''
+        for elem in bodylist:
+            try:
+                bodyStr+=str(elem)
+            except:
+                bodyStr+=elem"""
+        return '\n'.join([str(elem) for elem in body_div.contents])
+
 
     def json(self, *args, **kwargs):
         """Provide a complete representation of the work in JSON.
