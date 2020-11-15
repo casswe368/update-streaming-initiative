@@ -19,7 +19,7 @@ username=cred.username
 password=cred.password
 api.login(username, password)
 
-work = api.work(id='7215418')
+work = api.work(id='7791553')
 print('title')
 #print(work._html)
 print(work.title)
@@ -36,8 +36,8 @@ print(work2.title)
 
 """
 f = open('WorkHTMLTEST.txt', 'w', encoding='utf-8')
-html=work2._html
-soup=work2._soup
+html=work._html
+soup=work._soup
 #f.write('html starts here')
 #f.write(html)
 #f.write('html ends here')
@@ -47,14 +47,14 @@ f.write(soup.prettify())
 #f.write('soup ends here')
 f.close()
 """
-
 #print(work.body)
 
 text=work.body
+print(text)
 
 soup = BeautifulSoup(text, 'html.parser')
 
-print(soup.embed)
+#print(soup.embed)
 
 for link in soup.find_all('embed'):
     print(link.get('flashvars'))
@@ -63,4 +63,4 @@ text2=work2.body
 
 soup2 = BeautifulSoup(text2, 'html.parser')
 
-print(soup2.audio)
+#print(soup2.audio)
