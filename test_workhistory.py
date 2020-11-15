@@ -19,7 +19,7 @@ username=cred.username
 password=cred.password
 api.login(username, password)
 
-work = api.work(id='7791553')
+work = api.work(id='9389675')
 print('title')
 #print(work._html)
 print(work.title)
@@ -49,7 +49,7 @@ f.close()
 """
 #print(work.body)
 
-text=work2.body
+text=work.body
 print(text)
 
 soup = BeautifulSoup(text, 'html.parser')
