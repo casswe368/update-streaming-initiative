@@ -25,3 +25,6 @@ work = api.work(id='7215418')
 print('title')
 #print(work._html)
 print(work.title)
+
+workList = api.user.catalog_ids()
+print(workList)
