@@ -75,9 +75,14 @@ class Work(object):
         #
         #     <h2 class="title heading">[title]</h2>
         #
-        # TODO: Retrieve title from restricted work
+        # Update: Retrieve title from restricted work
+        # The title of a restricted work is stored with the restricted icon
+        #   <h2 class="title heading">
+        #       <img alt="(Restricted)" title="Restricted" src="/images/lockblue.png" width="15" height="15"/>
+        #       title
+        #   </h2>
         title_tag = self._soup.find('h2', attrs={'class': 'title'})
-        return title_tag.contents[0].strip()
+        return title_tag.text.strip()
 
     @property
     def author(self):
