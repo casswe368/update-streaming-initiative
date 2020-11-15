@@ -6,6 +6,9 @@ import json
 from bs4 import BeautifulSoup, Tag
 import requests
 
+import time
+import random
+
 
 class WorkNotFound(Exception):
     pass
@@ -24,13 +27,20 @@ class Work(object):
         if sess == None:
             sess = requests.Session()
             
+        time.sleep(2+random.random())    
         req = sess.get('https://archiveofourown.org/works/%s?view_full_work=true' % self.id)
 
         if req.status_code == 404:
             raise WorkNotFound('Unable to find a work with id %r' % self.id)
         elif req.status_code != 200:
-            raise RuntimeError('Unexpected error from AO3 API: %r' % (
-                req.text))
+            if req.text.startswith('Retry'):
+                print('Retry later error encountered for work id', self.id)
+                time.sleep(10+random.random())
+                req = sess.get('https://archiveofourown.org/works/%s?view_full_work=true' % self.id)
+                if req.text.startswith('Retry'):
+                    raise RuntimeError('Retry later error still present for work id %r' % self.id)
+            raise RuntimeError('Unexpected error from AO3 API: %r' % 
+                req.text)
 
         # For some works, AO3 throws up an interstitial page asking you to
         # confirm that you really want to see the adult works.  Yes, we do.
