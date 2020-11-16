@@ -3,7 +3,7 @@ Update Streaming Code
 
 This project is written to identify flash-based streaming players imbedded in AO3 works. It is build off of a forked version of alexwlchan's unofficial AO3 api.
 You can find `the original package by alexwlchan here <https://github.com/alexwlchan/ao3/>`_ and `the version used for this project here <https://github.com/casswe368/ao3>`_.
-This Python package provides a scripted interface to some of the data on
+
 
 
 Motivation
