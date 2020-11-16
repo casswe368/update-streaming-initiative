@@ -8,7 +8,7 @@ dist
 .cache
 .coverage
 .tox
-*.txt
+
 
 # Log in info
 cred.py
