@@ -27,7 +27,7 @@ class Work(object):
         if sess == None:
             sess = requests.Session()
             
-        time.sleep(2+random.random())    
+        time.sleep(3+random.random())    
         req = sess.get('https://archiveofourown.org/works/%s?view_full_work=true' % self.id)
 
         if req.status_code == 404:
@@ -35,7 +35,7 @@ class Work(object):
         elif req.status_code != 200:
             if req.text.startswith('Retry'):
                 print('Retry later error encountered for work id', self.id)
-                time.sleep(10+random.random())
+                time.sleep(20+random.random())
                 req = sess.get('https://archiveofourown.org/works/%s?view_full_work=true' % self.id)
                 if req.text.startswith('Retry'):
                     raise RuntimeError('Retry later error still present for work id %r' % self.id)
