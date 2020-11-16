@@ -66,8 +66,9 @@ def login():
     return api
     
 def getCatalog(api):
-    #pull a list of all ids for the user's catalog of works    
-    catalog = api.user.catalog_ids()
+    #pull a list of all ids for the user's catalog of works
+    url=input("Please specify the url in the format of users/gunpowderandlove or tags/Leverage: ")    
+    catalog = api.user.outside_catalog_ids(url)
     return catalog
 
 def scanWorks(api,catalog):
