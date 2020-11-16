@@ -19,6 +19,15 @@ username=cred.username
 password=cred.password
 api.login(username, password)
 
+url='users/Shmaylor'
+catalog = api.user.outside_catalog_ids(url)
+print(catalog)
+print(len(catalog))
+
+catalog = api.user.user_catalog_ids()
+print(catalog)
+print(len(catalog))
+
 work = api.work(id='9389675')
 print('title')
 #print(work._html)
@@ -50,17 +59,18 @@ f.close()
 #print(work.body)
 
 text=work.body
-print(text)
+#print(text)
 
 soup = BeautifulSoup(text, 'html.parser')
 
 #print(soup.embed)
 
-for link in soup.find_all('embed'):
-    print(link.get('flashvars'))
+#for link in soup.find_all('embed'):
+#    print(link.get('flashvars'))
 
 text2=work2.body
 
-soup2 = BeautifulSoup(text2, 'html.parser')
+#soup2 = BeautifulSoup(text2, 'html.parser')
 
 #print(soup2.audio)
+
