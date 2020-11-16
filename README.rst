@@ -64,7 +64,7 @@ It is looking for the following kinds of code:
 	
 	<embed type="application/x-shockwave-flash" flashvars="mp3=MP3_FILE_URL" src="https://archiveofourown.org/system/dewplayer/dewplayer-bubble-vol.swf" width="250" height="65" allowscriptaccess="never" allownetworking="internal"></embed>
 	
-Or `the podfic.com player <http://podfic.com/
+Or `the podfic.com player <http://podfic.com/>`_
 
 .. code-block:: pycon
 
