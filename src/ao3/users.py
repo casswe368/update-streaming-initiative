@@ -223,16 +223,33 @@ class User(object):
             except:
                 # In case of absence of "next"
                 break
+        
 
-    def catalog_ids(self):
+    def user_catalog_ids(self):
         """
-        Returns a list of the ids of the user's catalog of works.
-
-        User must be logged in to see locked works.
+        Designate a url to assemble a list of ids of the user's catalog of works.
         """
         api_url = (
             'https://archiveofourown.org/users/%s/works?page=%%d'
             % self.username)
+        return self.catalog_ids(api_url)
+        
+    def outside_catalog_ids(self, url):
+        """
+        Designate a url to assemble a list of ids of a specific catalog of works.
+        """
+        api_url = (
+            'https://archiveofourown.org/%s/works?page=%%d'
+            % url)
+        return self.catalog_ids(api_url)        
+
+
+    def catalog_ids(self, api_url):
+        """
+        Returns a list of the ids of the designated catalog of works.
+
+        User must be logged in to see locked works.
+        """
 
         works = []
 
