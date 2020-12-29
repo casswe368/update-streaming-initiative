@@ -15,6 +15,8 @@ This means that for many podficcers, the in-page streaming for their podfics wil
 
 I wrote this code to find all my podfics that need to be updated, and then to pull out the url from the old code and reformat it using the html5 audio tag. I then expanded it so that you can pull from any user that you enter so that the "update report" can be generated for other podficcers as well.
 
+Major update as-of Dec 28, 2020. AO3 announced today that because of the flash player being decomissioned they will be `updating all current embedded audio that uses the Dewplayer <https://archiveofourown.org/admin_posts/18129>`_ (A03's flash player for audio) in the "near future." No details on when that is, but it may be worth it to wait for A03 to update the code and then just check for embedded streaming that uses other flash players. 
+
 Installation
 ************
 
