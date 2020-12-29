@@ -8,7 +8,7 @@ dist
 .cache
 .coverage
 .tox
-
+test-workhistory.py
 
 # Log in info
 cred.py
