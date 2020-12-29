@@ -77,7 +77,7 @@ And will generate code using the html5 audio tag to replace it in the following 
 
 	<audio src="MP3_FILE_URL" controls="controls" crossorigin="anonymous" preload="metadata">Your browser does not support streaming with the HTML5 audio tag, but you can still <a href="MP3_FILE_URL">play this podfic</a> in another tab.</audio>
    
-Note: This code is not guaranteed to work depending on your hosting. There are some shenanigans to watch out for with http vs https, and your hosting site has to have CORS enabled. Check that this code is compatible with your hosting before you go and do all this work of replacing your code.
+Note: This code is not guaranteed to work depending on your hosting. There are some shenanigans to watch out for with http vs https, and your hosting site has to have CORS enabled. Check that this code is compatible with your hosting before you go and do all this work of replacing your code. Also watch for urls that just say http instead of https because those will not work either, but you can just find and replace to add the s.
 
 License
 *******
